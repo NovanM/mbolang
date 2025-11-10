@@ -10,7 +10,8 @@ class BerandaController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Destinasi::with(['admin', 'pengelolaDestinasi'])
+        $query = Destinasi::withApprovedAverageRating()
+            ->with(['admin', 'pengelolaDestinasi'])
             ->where('status_verifikasi', 'verified');
 
         // Search by nama destinasi or lokasi
@@ -46,7 +47,8 @@ class BerandaController extends Controller
 
     public function show($id)
     {
-        $destinasi = Destinasi::with(['admin', 'pengelolaDestinasi', 'ulasan.pengguna'])
+        $destinasi = Destinasi::withApprovedAverageRating()
+            ->with(['admin', 'pengelolaDestinasi', 'ulasan.pengguna'])
             ->findOrFail($id);
 
         // Check if already favorited by current user

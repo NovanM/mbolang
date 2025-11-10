@@ -11,7 +11,8 @@ class UlasanController extends Controller
 {
     public function index($id)
     {
-        $destinasi = Destinasi::with(['ulasan.pengguna'])
+        $destinasi = Destinasi::withApprovedAverageRating()
+            ->with(['ulasan.pengguna'])
             ->findOrFail($id);
 
         return view('destinasi.ulasan', compact('destinasi'));
@@ -19,7 +20,8 @@ class UlasanController extends Controller
 
     public function create($id)
     {
-        $destinasi = Destinasi::with(['ulasan.pengguna'])
+        $destinasi = Destinasi::withApprovedAverageRating()
+            ->with(['ulasan.pengguna'])
             ->findOrFail($id);
 
         return view('destinasi.tambah-ulasan', compact('destinasi'));

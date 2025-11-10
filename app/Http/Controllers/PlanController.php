@@ -15,7 +15,9 @@ class PlanController extends Controller
         // Get all itineraries for current user with their destinations
         $itineraries = Itinerary::where('pengguna_id_pengguna', Auth::user()->id_pengguna)
             ->whereHas('destinasiList.destinasi')
-            ->with(['destinasiList.destinasi'])
+            ->with(['destinasiList.destinasi' => function ($query) {
+                $query->withApprovedAverageRating();
+            }])
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -27,7 +29,8 @@ class PlanController extends Controller
         $itinerary = Itinerary::with(['destinasiList.destinasi'])
             ->findOrFail($itineraryId);
         
-        $destinasi = Destinasi::where('status_verifikasi', 'verified')
+        $destinasi = Destinasi::withApprovedAverageRating()
+            ->where('status_verifikasi', 'verified')
             ->get();
 
         return view('plan.index', compact('itinerary', 'destinasi'));
@@ -123,5 +126,26 @@ class PlanController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'Destinasi berhasil ditambahkan']);
+    }
+
+    public function removeDestination($itineraryId, $destinationId)
+    {
+        $itinerary = Itinerary::where('pengguna_id_pengguna', Auth::user()->id_pengguna)
+            ->findOrFail($itineraryId);
+
+        $destination = ItineraryDestinasi::where('itinerary_id_itinerary', $itineraryId)
+            ->where('id_itinerary_destinasi', $destinationId)
+            ->firstOrFail();
+
+        if ($itinerary->itinerary_destinasi_id_itinerary_destinasi === $destination->id_itinerary_destinasi) {
+            $itinerary->itinerary_destinasi_id_itinerary_destinasi = null;
+            $itinerary->save();
+        }
+
+        $destination->delete();
+
+        return redirect()
+            ->route('itinerary.show', $itineraryId)
+            ->with('success', __('messages.plan_destination_removed'));
     }
 }

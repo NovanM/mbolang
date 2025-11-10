@@ -130,6 +130,7 @@ return [
     'plan_save_failed_prefix' => 'Failed to save:',
     'plan_save_error' => 'An error occurred while saving.',
     'plan_remove_destination' => 'Remove destination',
+    'plan_destination_removed' => 'Destination removed from plan successfully.',
     'plan_modal_title' => 'Choose a Plan You Created!',
     'plan_modal_more_destinations' => '+:count more',
     'category_wisata' => 'Tourism',
@@ -193,6 +194,11 @@ return [
     'comment' => 'Comment',
     'review_prompt' => 'Let us know, how was your visit?',
     'write_here' => 'Write here',
+    'edit_review' => 'Edit Review',
+    'delete_review' => 'Delete Review',
+    'delete_review_confirmation' => 'Are you sure you want to delete this review?',
+    'review_update_success' => 'Review updated successfully and awaiting admin verification.',
+    'review_delete_success' => 'Review deleted successfully.',
 
     // Destination Detail
     'about' => 'About',

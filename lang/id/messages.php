@@ -130,6 +130,7 @@ return [
     'plan_save_failed_prefix' => 'Gagal menyimpan:',
     'plan_save_error' => 'Terjadi kesalahan saat menyimpan.',
     'plan_remove_destination' => 'Hapus destinasi',
+    'plan_destination_removed' => 'Destinasi berhasil dihapus dari plan.',
     'plan_modal_title' => 'Pilih Plan yang Sudah Kamu Buat!',
     'plan_modal_more_destinations' => '+:count lainnya',
     'category_wisata' => 'Wisata',
@@ -193,6 +194,11 @@ return [
     'comment' => 'Komentar',
     'review_prompt' => 'Beri tahu kami, bagaimana kunjungan Anda?',
     'write_here' => 'Tuliskan di sini',
+    'edit_review' => 'Edit Ulasan',
+    'delete_review' => 'Hapus Ulasan',
+    'delete_review_confirmation' => 'Apakah Anda yakin ingin menghapus ulasan ini?',
+    'review_update_success' => 'Ulasan berhasil diperbarui dan menunggu verifikasi admin.',
+    'review_delete_success' => 'Ulasan berhasil dihapus.',
 
     // Destination Detail
     'about' => 'Tentang',

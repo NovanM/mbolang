@@ -37,7 +37,12 @@ class ItineraryController extends Controller
 
     public function show($id)
     {
-        $itinerary = Itinerary::with(['pengguna', 'destinasiList.destinasi'])
+        $itinerary = Itinerary::with([
+                'pengguna',
+                'destinasiList.destinasi' => function ($query) {
+                    $query->withApprovedAverageRating();
+                },
+            ])
             ->findOrFail($id);
 
         $hasDestinations = $itinerary->destinasiList->contains(function ($item) {

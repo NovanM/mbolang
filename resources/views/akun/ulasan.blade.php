@@ -7,7 +7,7 @@
 @section('content')
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Page Title -->
-        <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center justify-between mb-6">
             <h1 class="text-2xl font-bold text-[#3F51B5]">{{ __('messages.my_reviews') }}</h1>
             <a href="{{ route('akun.index') }}" class="text-[#3F51B5] hover:text-[#2c3a7f] font-semibold flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -16,6 +16,12 @@
                 {{ __('messages.back') }}
             </a>
         </div>
+
+        @if(session('success'))
+            <div class="mb-6 rounded-xl border border-green-200 bg-green-50 px-6 py-4 text-green-700">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <!-- Ulasan List -->
         @if($ulasans->count() > 0)
@@ -61,13 +67,32 @@
 
                                 <p class="text-gray-700 leading-relaxed mb-4">{{ $ulasan->komentar }}</p>
 
-                                <a href="{{ route('destinasi.detail', $dest->id_destinasi) }}"
-                                   class="inline-flex items-center gap-2 text-[#3F51B5] hover:text-[#2c3a7f] font-semibold">
-                                    {{ __('messages.plan_list_view_detail') }}
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                    </svg>
-                                </a>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <a href="{{ route('destinasi.detail', $dest->id_destinasi) }}"
+                                       class="inline-flex items-center gap-2 text-[#3F51B5] hover:text-[#2c3a7f] font-semibold">
+                                        {{ __('messages.plan_list_view_detail') }}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
+                                    <a href="{{ route('akun.ulasan.edit', $ulasan->id_ulasan) }}"
+                                       class="inline-flex items-center gap-2 text-[#1D2875] hover:text-[#0f1540] font-semibold">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h2m4 0h2m-8 0H7m8 14H7a2 2 0 01-2-2V7a2 2 0 012-2h2m5.414 0L19 7.586a2 2 0 01.586 1.414V17a2 2 0 01-2 2h-2M10 11l2-2 5 5-2 2-3-3-2 2v-4z"/>
+                                        </svg>
+                                        {{ __('messages.edit_review') }}
+                                    </a>
+                                    <form action="{{ route('akun.ulasan.destroy', $ulasan->id_ulasan) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="inline-flex items-center gap-2 text-red-600 hover:text-red-700 font-semibold">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                            </svg>
+                                            {{ __('messages.delete_review') }}
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -53,12 +53,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/plan/{itineraryId}/add-destination', [PlanController::class, 'addDestination'])->name('plan.add-destination');
     Route::post('/plan/{itineraryId}/add-destination-from-detail', [PlanController::class, 'addDestinationFromDetail'])->name('plan.add-destination-from-detail');
     Route::post('/plan/{itineraryId}/save', [PlanController::class, 'saveItinerary'])->name('plan.save');
+    Route::delete('/plan/{itineraryId}/destinations/{destinationId}', [PlanController::class, 'removeDestination'])->name('plan.destinations.destroy');
 
     // Akun (harus login)
     Route::get('/akun', [AkunController::class, 'index'])->name('akun.index');
     Route::get('/akun/favorit', [AkunController::class, 'favorit'])->name('akun.favorit');
     Route::get('/akun/ulasan', [AkunController::class, 'ulasan'])->name('akun.ulasan');
     Route::get('/akun/tiket', [AkunController::class, 'tiket'])->name('akun.tiket');
+    Route::get('/akun/ulasan/{ulasan}/edit', [AkunController::class, 'editUlasan'])->name('akun.ulasan.edit');
+    Route::put('/akun/ulasan/{ulasan}', [AkunController::class, 'updateUlasan'])->name('akun.ulasan.update');
+    Route::delete('/akun/ulasan/{ulasan}', [AkunController::class, 'destroyUlasan'])->name('akun.ulasan.destroy');
     Route::delete('/favorit/{id}', [AkunController::class, 'destroyFavorit'])->name('favorit.destroy');
     Route::post('/favorit/{destinasiId}', [AkunController::class, 'toggleFavorit'])->name('favorit.toggle');
 });
