@@ -188,6 +188,7 @@ return [
     'add_review' => 'Tambah Ulasan',
     'your_review' => 'Ulasan Anda',
     'rating' => 'Rating',
+    'of_5_stars' => 'dari 5 bintang',
     'submit_review' => 'Kirim Ulasan',
     'no_reviews_yet' => 'Belum ada ulasan',
     'view_all' => 'Lihat Semua',

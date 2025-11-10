@@ -24,12 +24,17 @@
                 @method('PUT')
 
                 <div>
-                    <label for="rating" class="block text-sm font-semibold text-[#1F3C88] mb-2">{{ __('messages.rating') }}</label>
-                    <select id="rating" name="rating" required class="w-full px-4 py-3 border border-[#6383FF] rounded-[14px] focus:outline-none focus:ring-4 focus:ring-[#E1E8FF] focus:border-[#304DFF]">
-                        @for($i = 5; $i >= 1; $i--)
-                            <option value="{{ $i }}" @selected(old('rating', $ulasan->rating) == $i)>{{ $i }} / 5</option>
+                    <label class="block text-sm font-semibold text-[#1F3C88] mb-3">{{ __('messages.rating') }}</label>
+                    <div class="flex gap-4" id="rating-stars">
+                        @for($i = 1; $i <= 5; $i++)
+                            <button type="button" onclick="setRating({{ $i }})" class="rating-star transition-transform hover:scale-110 focus:outline-none" aria-label="{{ $i }} {{ __('messages.of_5_stars') }}">
+                                <svg class="w-12 h-12 text-[#E5E7F9] fill-current drop-shadow-[0_6px_12px_rgba(250,191,36,0.3)]" viewBox="0 0 20 20" data-rating="{{ $i }}">
+                                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                </svg>
+                            </button>
                         @endfor
-                    </select>
+                    </div>
+                    <input type="hidden" name="rating" id="rating-input" value="{{ old('rating', $ulasan->rating) }}" required>
                     @error('rating')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -55,3 +60,62 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let selectedRating = Number(document.getElementById('rating-input').value || 0);
+        const activeStarClass = ['text-[#FBBF24]'];
+        const inactiveStarClass = ['text-[#E5E7F9]'];
+
+        function setRating(rating) {
+            selectedRating = rating;
+            document.getElementById('rating-input').value = rating;
+
+            const stars = document.querySelectorAll('.rating-star svg');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove(...inactiveStarClass);
+                    star.classList.add(...activeStarClass);
+                } else {
+                    star.classList.remove(...activeStarClass);
+                    star.classList.add(...inactiveStarClass);
+                }
+            });
+        }
+
+        window.setRating = setRating;
+
+        document.querySelectorAll('.rating-star').forEach((button, index) => {
+            button.addEventListener('mouseenter', () => {
+                const stars = document.querySelectorAll('.rating-star svg');
+                stars.forEach((star, i) => {
+                    if (i <= index) {
+                        star.classList.remove(...inactiveStarClass);
+                        star.classList.add(...activeStarClass);
+                    } else {
+                        star.classList.remove(...activeStarClass);
+                        star.classList.add(...inactiveStarClass);
+                    }
+                });
+            });
+        });
+
+        document.getElementById('rating-stars').addEventListener('mouseleave', () => {
+            if (selectedRating > 0) {
+                setRating(selectedRating);
+            } else {
+                const stars = document.querySelectorAll('.rating-star svg');
+                stars.forEach(star => {
+                    star.classList.remove(...activeStarClass);
+                    star.classList.add(...inactiveStarClass);
+                });
+            }
+        });
+
+        if (selectedRating > 0) {
+            setRating(selectedRating);
+        }
+    });
+</script>
+@endpush

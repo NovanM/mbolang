@@ -188,6 +188,7 @@ return [
     'add_review' => 'Add Review',
     'your_review' => 'Your Review',
     'rating' => 'Rating',
+    'of_5_stars' => 'out of 5 stars',
     'submit_review' => 'Submit Review',
     'no_reviews_yet' => 'No reviews yet',
     'view_all' => 'View All',
