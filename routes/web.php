@@ -9,6 +9,10 @@ use App\Http\Controllers\ItineraryController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\LanguageController;
+
+// Language Routes
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
 // Public Routes (Guest bisa akses)
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');

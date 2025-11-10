@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Mbolang</title>
+    <title>{{ __('messages.register') }} - Mbolang</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            
+
             <!-- Right Side - Register Form -->
             <div class="w-full max-w-md">
                 <div class="bg-white rounded-3xl shadow-2xl p-8 lg:p-10">
@@ -39,8 +39,8 @@
 
                     <!-- Header -->
                     <div class="text-center mb-8">
-                        <h2 class="text-xl font-semibold text-gray-700 mb-1">Registrasi</h2>
-                        <p class="text-2xl font-bold text-blue-600">Selamat Datang!</p>
+                        <h2 class="text-xl font-semibold text-gray-700 mb-1">{{ __('messages.registration') }}</h2>
+                        <p class="text-2xl font-bold text-blue-600">{{ __('messages.welcome') }}</p>
                     </div>
 
                     <!-- Register Form -->
@@ -49,7 +49,7 @@
 
                         <!-- Email Field -->
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.email') }}</label>
                             <input 
                                 type="email" 
                                 id="email" 
@@ -67,7 +67,7 @@
 
                         <!-- Name Field -->
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.full_name') }}</label>
                             <input 
                                 type="text" 
                                 id="name" 
@@ -84,7 +84,7 @@
 
                         <!-- Password Field -->
                         <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Kata Sandi</label>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.password') }}</label>
                             <div class="relative">
                                 <input 
                                     type="password" 
@@ -118,7 +118,7 @@
                             type="submit"
                             class="w-full bg-[#1E3A5F] hover:bg-[#152D4A] text-white font-semibold py-3.5 rounded-lg transition duration-200 shadow-lg hover:shadow-xl"
                         >
-                            Masuk
+                            {{ __('messages.register') }}
                         </button>
 
                         <!-- Divider -->
@@ -127,7 +127,7 @@
                                 <div class="w-full border-t border-gray-300"></div>
                             </div>
                             <div class="relative flex justify-center text-sm">
-                                <span class="px-4 bg-white text-gray-500 font-medium">OR</span>
+                                <span class="px-4 bg-white text-gray-500 font-medium">{{ __('messages.or') }}</span>
                             </div>
                         </div>
 
@@ -143,16 +143,16 @@
                                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                             </svg>
-                            Masuk dengan Google
+                            {{ __('messages.register_with_google') }}
                         </button>
                     </form>
 
                     <!-- Login Link -->
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-600">
-                            Sudah memiliki akun? 
+                            {{ __('messages.already_have_account') }} 
                             <a href="{{ route('login') }}" class="text-blue-600 font-semibold hover:text-blue-700 hover:underline">
-                                Masuk
+                                {{ __('messages.login') }}
                             </a>
                         </p>
                     </div>

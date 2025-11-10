@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Membuat Perjalanan - Mbolang')
+@section('title', __('messages.create_trip') . ' - Mbolang')
 
-@section('body-class', 'bg-gray-50')
+@section('body-class', 'bg-white')
 
 @push('styles')
 <style>
@@ -115,15 +115,15 @@
             
             <!-- Nama Perjalanan Section -->
             <div class="mb-12">
-                <label for="nama_perjalanan" class="block text-[#3F51B5] text-2xl font-bold mb-4">
-                    Nama Perjalanan
+                <label for="nama_perjalanan" class="block text-[#1F3C88] text-2xl font-bold mb-4">
+                    {{ __('messages.trip_name') }}
                 </label>
                 <input 
                     type="text" 
                     id="nama_perjalanan" 
                     name="nama_perjalanan" 
-                    class="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#3F51B5] focus:border-transparent text-lg bg-white shadow-sm"
-                    placeholder="Tambahkan Nama Perjalanan"
+                    class="w-full px-8 py-4 border border-transparent rounded-full focus:outline-none focus:ring-4 focus:ring-[#E1E8FF] focus:border-[#304DFF] text-lg bg-white shadow-[0_20px_40px_rgba(17,32,84,0.12)] placeholder:text-[#9AA6C5] text-[#1D2756]"
+                    placeholder="{{ __('messages.trip_name_placeholder') }}"
                     value="{{ old('nama_perjalanan') }}"
                     required>
                 @error('nama_perjalanan')
@@ -133,8 +133,8 @@
 
             <!-- Jadwal Section -->
             <div class="mb-12">
-                <label class="block text-[#3F51B5] text-2xl font-bold mb-6">
-                    Jadwal
+                <label class="block text-[#1F3C88] text-2xl font-bold mb-6">
+                    {{ __('messages.trip_schedule') }}
                 </label>
                 
                 <!-- Calendar Wrapper for Centering -->
@@ -160,14 +160,9 @@
                             <!-- Calendar Grid -->
                             <div class="calendar-grid" id="calendar-grid">
                                 <!-- Day headers -->
-                                <div class="calendar-day-header">M</div>
-                                <div class="calendar-day-header">T</div>
-                                <div class="calendar-day-header">W</div>
-                                <div class="calendar-day-header">T</div>
-                                <div class="calendar-day-header">F</div>
-                                <div class="calendar-day-header">S</div>
-                                <div class="calendar-day-header">S</div>
-                                
+                                @foreach(trans('messages.day_headers') as $day)
+                                    <div class="calendar-day-header">{{ $day }}</div>
+                                @endforeach
                                 <!-- Days will be populated by JavaScript -->
                             </div>
                         </div>
@@ -184,8 +179,8 @@
             <div class="max-w-4xl mx-auto px-4">
                 <button 
                     type="submit" 
-                    class="w-full bg-[#2C3E65] text-white py-4 rounded-2xl font-semibold text-lg hover:bg-[#3d5078] transition-all shadow-lg hover:shadow-xl">
-                    Tambahkan Perjalanan
+                    class="w-full bg-[#122A6A] text-white py-4 rounded-full font-semibold text-lg hover:bg-[#0D1F4F] transition-all shadow-[0_16px_30px_rgba(15,32,84,0.28)]">
+                    {{ __('messages.add_trip') }}
                 </button>
             </div>
         </form>
@@ -195,13 +190,13 @@
         let currentDate = new Date();
         let selectedDate = null;
 
+        const monthNames = @json(trans('messages.month_names'));
+
         function renderCalendar() {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
             
             // Update month-year display
-            const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
-                              'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
             document.getElementById('calendar-month-year').textContent = `${monthNames[month]}, ${year}`;
             
             // Get first day of month and number of days
@@ -299,14 +294,18 @@
             const today = new Date();
             currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
             
-            // Pre-select today's date
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            const todayDate = `${year}-${month}-${day}`;
-            
-            selectedDate = todayDate;
-            document.getElementById('tanggal_perjalanan').value = todayDate;
+            // Pre-select date based on existing value or today
+            const existingDate = document.getElementById('tanggal_perjalanan').value;
+            if (existingDate) {
+                selectedDate = existingDate;
+            } else {
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                const todayDate = `${year}-${month}-${day}`;
+                selectedDate = todayDate;
+                document.getElementById('tanggal_perjalanan').value = todayDate;
+            }
             
             renderCalendar();
         });

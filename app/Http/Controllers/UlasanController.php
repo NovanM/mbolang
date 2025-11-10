@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destinasi;
+use App\Models\RiwayatKunjungan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UlasanController extends Controller
@@ -32,15 +34,30 @@ class UlasanController extends Controller
             'komentar' => 'required|string|max:1000',
         ]);
 
-        // TODO: Get authenticated user ID
-        // For now, using a default user or guest mode
-        $idPengguna = 1; // Replace with auth()->user()->id_pengguna when auth is implemented
+        $pengguna = Auth::user();
+        $idPengguna = $pengguna ? $pengguna->id_pengguna : 1;
 
-        // Create the review
+        $riwayat = RiwayatKunjungan::where('pengguna_id_pengguna', $idPengguna)
+            ->where('destinasi_id_destinasi', $destinasi->id_destinasi)
+            ->latest('tanggal_kunjungan')
+            ->first();
+
+        if (! $riwayat) {
+            $riwayat = RiwayatKunjungan::create([
+                'destinasi_id_destinasi' => $destinasi->id_destinasi,
+                'pengguna_id_pengguna' => $idPengguna,
+                'tanggal_pembelian' => now(),
+                'tanggal_kunjungan' => now()->toDateString(),
+                'status_pembayaran' => 'pending',
+                'status_checkin' => 'pending',
+                'status_ulasan' => 'pending',
+            ]);
+        }
+
         \App\Models\Ulasan::create([
             'pengguna_id_pengguna' => $idPengguna,
             'destinasi_id_destinasi' => $destinasi->id_destinasi,
-            'riwayat_kunjungan_id_kunjungan' => null, // Will be filled after visit
+            'riwayat_kunjungan_id_kunjungan' => $riwayat->id_kunjungan,
             'rating' => $validated['rating'],
             'komentar' => $validated['komentar'],
             'tanggal_ulasan' => now(),

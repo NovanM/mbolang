@@ -40,6 +40,16 @@ class ItineraryController extends Controller
         $itinerary = Itinerary::with(['pengguna', 'destinasiList.destinasi'])
             ->findOrFail($id);
 
+        $hasDestinations = $itinerary->destinasiList->contains(function ($item) {
+            return $item->destinasi !== null;
+        });
+
+        if (! $hasDestinations) {
+            return redirect()
+                ->route('plan.list')
+                ->with('warning', 'Perjalanan ini belum memiliki destinasi untuk ditampilkan.');
+        }
+
         return view('itinerary.show', compact('itinerary'));
     }
 }

@@ -33,21 +33,33 @@
                 <div class="flex-1 bg-white rounded-2xl shadow-md p-6 border border-gray-200">
                     <div class="flex gap-6">
                         <!-- Image -->
-                        <img src="https://picsum.photos/seed/{{ $itineraryDest->destinasi->id_destinasi }}/400/300" 
-                             alt="{{ $itineraryDest->destinasi->nama_destinasi }}" 
-                             class="w-32 h-24 object-cover rounded-lg flex-shrink-0">
+                    @if($itineraryDest->destinasi->foto)
+                    <img src="{{ asset($itineraryDest->destinasi->foto) }}" 
+                        alt="{{ $itineraryDest->destinasi->nama_destinasi }}" 
+                        class="w-32 h-24 object-cover rounded-lg flex-shrink-0">
+                    @else
+                    <div class="w-32 h-24 rounded-lg flex items-center justify-center bg-gradient-to-br from-[#3F51B5] to-[#1E3A8A] text-white text-2xl font-semibold flex-shrink-0">
+                       {{ strtoupper(substr($itineraryDest->destinasi->nama_destinasi, 0, 1)) }}
+                    </div>
+                    @endif
                         
                         <!-- Info -->
                         <div class="flex-1">
                             <h3 class="text-xl font-bold text-[#3F51B5] mb-2">{{ $itineraryDest->destinasi->nama_destinasi }}</h3>
                             <p class="text-gray-600 mb-1">
-                                Datang di jam <strong>{{ $itineraryDest->jam_kunjungan }}</strong>
+                                Datang di jam <strong>{{ $itineraryDest->jam_kunjungan ?? '-' }}</strong>
                             </p>
-                            <p class="text-gray-600 flex items-center gap-2">
+                            <p class="text-gray-600 flex items-center gap-2 mb-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                                 </svg>
                                 {{ $itineraryDest->destinasi->no_telepon ?? 'Tidak ada nomor telepon' }}
+                            </p>
+                            <p class="text-gray-600 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 12.414a4 4 0 10-5.657 5.657l4.243 4.243a8 8 0 1011.314-11.314l-4.243 4.243z" />
+                                </svg>
+                                {{ $itineraryDest->destinasi->lokasi ?? 'Lokasi belum tersedia' }}
                             </p>
                         </div>
                     </div>

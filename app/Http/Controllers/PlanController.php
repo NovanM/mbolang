@@ -14,6 +14,7 @@ class PlanController extends Controller
     {
         // Get all itineraries for current user with their destinations
         $itineraries = Itinerary::where('pengguna_id_pengguna', Auth::user()->id_pengguna)
+            ->whereHas('destinasiList.destinasi')
             ->with(['destinasiList.destinasi'])
             ->orderBy('created_at', 'desc')
             ->get();

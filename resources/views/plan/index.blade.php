@@ -65,38 +65,116 @@
         color: #2C3E65;
     }
     
-    /* Selected Destination Card */
-    .selected-destination-card {
-        border: 1px solid #E5E7EB;
-        border-radius: 0.75rem;
-        padding: 1.25rem;
+    /* Selected Destinations */
+    .selection-row {
+        position: relative;
         display: flex;
-        gap: 1rem;
-        align-items: center;
-        background: white;
+        align-items: flex-start;
+        gap: 1.25rem;
         margin-bottom: 1rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .selection-row::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        top: 30px;
+        bottom: -12px;
+        width: 2px;
+        background: linear-gradient(180deg, rgba(63,81,181,0.35) 0%, rgba(63,81,181,0) 100%);
+    }
+    
+    .selection-row:last-child::before,
+    .selection-row.placeholder::before {
+        display: none;
+    }
+    
+    .timeline-dot {
+        width: 18px;
+        height: 18px;
+        border-radius: 9999px;
+        background: #3F51B5;
+        box-shadow: 0 0 0 8px rgba(63, 81, 181, 0.18);
+        margin-top: 1.25rem;
+        flex-shrink: 0;
+    }
+    
+    .selected-destination-card {
+        border: 1px solid #D7DDF2;
+        border-radius: 1.25rem;
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        align-items: center;
+        background: #FFFFFF;
+        width: 100%;
+        box-shadow: 0 12px 24px rgba(28, 66, 140, 0.08);
     }
     
     .selected-destination-card img {
-        width: 120px;
-        height: 90px;
+        width: 132px;
+        height: 96px;
         object-fit: cover;
-        border-radius: 0.5rem;
+        border-radius: 0.9rem;
+        flex-shrink: 0;
     }
     
-    .number-bullet {
-        width: 32px;
-        height: 32px;
-        background: #3F51B5;
+    .selected-destination-card.placeholder {
+        justify-content: center;
+        text-align: center;
+        color: #7B8AB7;
+        font-weight: 500;
+        background: #F7F9FF;
+        border: 1px dashed #C4CDED;
+        min-height: 110px;
+    }
+    
+    .selected-destination-card .meta {
+        color: #647098;
+        font-size: 0.9rem;
+    }
+    
+    .btn-disabled {
+        opacity: 0.55;
+        pointer-events: none;
+    }
+    
+    .add-badge {
+        position: absolute;
+        bottom: 22px;
+        right: 24px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
+        background: #1D2875;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        font-weight: 600;
-        font-size: 1rem;
+        color: #FFFFFF;
+        box-shadow: 0 10px 25px rgba(29, 40, 117, 0.22);
         flex-shrink: 0;
+        pointer-events: none;
+        transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    
+    .destinasi-card {
+        position: relative;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    
+    .destinasi-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 42px rgba(17, 31, 99, 0.18);
+    }
+    
+    .destinasi-card.selected {
+        border-color: #1D2875;
+        box-shadow: 0 18px 46px rgba(17, 31, 99, 0.22);
+    }
+    
+    .destinasi-card.selected .add-badge {
+        background: #25AE62;
+        box-shadow: 0 10px 26px rgba(37, 174, 98, 0.28);
     }
 </style>
 @endpush
@@ -105,46 +183,43 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Pilih Rencana Perjalanan Section -->
         <div class="mb-12">
-            <h2 class="text-2xl font-bold text-[#3F51B5] mb-6">Pilih Rencana Perjalanan</h2>
-            
-            <!-- Selected Destinations List -->
-            <div id="selected-destinations" class="mb-6">
-                <!-- Selected destinations will be added here dynamically -->
+            <h2 class="text-2xl font-bold text-[#203B8A] mb-8">{{ __('messages.choose_trip_plan') }}</h2>
+
+            <!-- Selected Destinations Timeline -->
+            <div id="selected-destinations" class="mb-8 space-y-4">
+                <!-- Rendered dynamically -->
             </div>
-            
+
             <!-- Action Buttons -->
-            <div class="flex gap-4 mb-8">
-                <button onclick="showAddDestinationModal()" class="bg-[#3F51B5] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#2c3a7f] transition">
-                    Tambahkan
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <button type="button" onclick="scrollToDestinations()" class="bg-[#3F51B5] text-white px-10 py-3 rounded-xl font-semibold shadow-[0_12px_30px_rgba(63,81,181,0.25)] transition hover:bg-[#2c3a7f]">
+                    {{ __('messages.add') }}
                 </button>
-                <button onclick="saveItinerary()" class="bg-[#2C3E65] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#3d5078] transition">
-                    Simpan
+                <button type="button" id="saveHeaderButton" onclick="saveItinerary()" class="bg-[#1D2875] text-white px-10 py-3 rounded-xl font-semibold shadow-[0_12px_30px_rgba(29,40,117,0.28)] transition hover:bg-[#131a5a] btn-disabled">
+                    {{ __('messages.save') }}
                 </button>
             </div>
         </div>
 
-        <!-- Pilih Kategori Section -->
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold text-[#3F51B5] mb-6">Pilih Kategori</h2>
+    <!-- Pilih Kategori Section -->
+    <div id="destinationCatalog" class="mb-8">
+            <h2 class="text-2xl font-bold text-[#3F51B5] mb-6">{{ __('messages.choose_category') }}</h2>
             
             <!-- Category Filter Buttons -->
-            <div class="flex gap-3 mb-8 overflow-x-auto pb-2">
-                <button onclick="filterCategory('all')" class="category-btn active px-6 py-2.5 rounded-lg font-semibold bg-[#3F51B5] text-white whitespace-nowrap transition hover:bg-[#2c3a7f]">Semua</button>
-                <button onclick="filterCategory('wisata alam')" class="category-btn px-6 py-2.5 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap transition">Wisata Alam</button>
-                <button onclick="filterCategory('wisata kuliner')" class="category-btn px-6 py-2.5 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap transition">Kuliner</button>
-                <button onclick="filterCategory('wahana bermain')" class="category-btn px-6 py-2.5 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap transition">Wahana</button>
-                <button onclick="filterCategory('museum')" class="category-btn px-6 py-2.5 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap transition">Museum</button>
-                <button onclick="filterCategory('perpustakaan')" class="category-btn px-6 py-2.5 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap transition">Perpustakaan</button>
-            </div>
-                <button onclick="filterCategory('wahana')" class="category-btn px-6 py-2.5 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap transition">Wahana</button>
-                <button onclick="filterCategory('taman')" class="category-btn px-6 py-2.5 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap transition">Taman</button>
-                <button onclick="filterCategory('mall')" class="category-btn px-6 py-2.5 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap transition">Mall</button>
+            <div class="flex flex-wrap gap-3 mb-8 overflow-x-auto pb-2">
+                <button type="button" onclick="filterCategory('all', this)" class="category-btn active px-6 py-2.5 rounded-full font-semibold bg-[#1D2875] text-white whitespace-nowrap transition hover:bg-[#131a5a]">{{ __('messages.all') }}</button>
+                <button type="button" onclick="filterCategory('wisata', this)" class="category-btn px-6 py-2.5 rounded-full font-semibold border border-[#CAD0EC] text-[#203B8A] bg-white whitespace-nowrap transition hover:bg-[#f5f7ff]">{{ __('messages.category_wisata') }}</button>
+                <button type="button" onclick="filterCategory('alam', this)" class="category-btn px-6 py-2.5 rounded-full font-semibold border border-[#CAD0EC] text-[#203B8A] bg-white whitespace-nowrap transition hover:bg-[#f5f7ff]">{{ __('messages.category_alam') }}</button>
+                <button type="button" onclick="filterCategory('cafe', this)" class="category-btn px-6 py-2.5 rounded-full font-semibold border border-[#CAD0EC] text-[#203B8A] bg-white whitespace-nowrap transition hover:bg-[#f5f7ff]">{{ __('messages.category_cafe') }}</button>
+                <button type="button" onclick="filterCategory('wahana', this)" class="category-btn px-6 py-2.5 rounded-full font-semibold border border-[#CAD0EC] text-[#203B8A] bg-white whitespace-nowrap transition hover:bg-[#f5f7ff]">{{ __('messages.category_wahana') }}</button>
+                <button type="button" onclick="filterCategory('taman', this)" class="category-btn px-6 py-2.5 rounded-full font-semibold border border-[#CAD0EC] text-[#203B8A] bg-white whitespace-nowrap transition hover:bg-[#f5f7ff]">{{ __('messages.category_taman') }}</button>
+                <button type="button" onclick="filterCategory('mall', this)" class="category-btn px-6 py-2.5 rounded-full font-semibold border border-[#CAD0EC] text-[#203B8A] bg-white whitespace-nowrap transition hover:bg-[#f5f7ff]">{{ __('messages.category_mall') }}</button>
             </div>
             
             <!-- Destinations Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 @foreach($destinasi as $dest)
-                <div class="destinasi-card bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#3F51B5] cursor-pointer" 
+                <div class="destinasi-card bg-white rounded-[28px] shadow-[0_14px_45px_rgba(17,31,99,0.12)] overflow-hidden transition-all duration-300 border border-[#E2E6F3] cursor-pointer" 
                      data-category="{{ strtolower($dest->kategori) }}"
                      data-id="{{ $dest->id_destinasi }}"
                      data-name="{{ $dest->nama_destinasi }}"
@@ -164,10 +239,10 @@
                     </div>
                     
                     <!-- Content -->
-                    <div class="p-5">
+                    <div class="p-5 relative">
                         <!-- Title & Rating -->
                         <div class="mb-3">
-                            <h3 class="text-xl font-bold text-[#3F51B5] mb-2">{{ $dest->nama_destinasi }}</h3>
+                            <h3 class="text-lg font-semibold text-[#163072] mb-1">{{ $dest->nama_destinasi }}</h3>
                             <div class="flex items-center gap-1">
                                 @for($i = 0; $i < 5; $i++)
                                     @if($i < floor($dest->average_rating))
@@ -180,17 +255,22 @@
                                     </svg>
                                     @endif
                                 @endfor
-                                <span class="text-base font-bold text-gray-700 ml-1">{{ number_format($dest->average_rating, 1) }}/5</span>
+                                <span class="text-sm font-semibold text-[#1D2875] ml-1">{{ number_format($dest->average_rating, 1) }}/5</span>
                             </div>
                         </div>
 
                         <!-- Location -->
-                        <p class="text-base text-[#3F51B5] mb-2 font-medium">{{ $dest->lokasi }}</p>
+                        <p class="text-sm text-[#4B5E95] mb-3 font-medium">{{ $dest->lokasi }}</p>
 
                         <!-- Category -->
                         <div class="flex items-center gap-2">
-                            <span class="inline-block px-4 py-1.5 bg-white text-gray-800 text-sm font-medium rounded-lg border border-gray-300">
+                            <span class="inline-flex px-4 py-1 bg-[#F0F3FF] text-[#1D2875] text-xs font-semibold rounded-full border border-[#D4DCF7]">
                                 {{ $dest->kategori }}
+                            </span>
+                            <span class="add-badge">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
                             </span>
                         </div>
                     </div>
@@ -199,12 +279,12 @@
             </div>
             
             <!-- Bottom Action Buttons -->
-            <div class="flex justify-between gap-4">
-                <button onclick="history.back()" class="px-10 py-3 rounded-lg font-semibold border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 transition">
-                    Kembali
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <button type="button" onclick="history.back()" class="px-10 py-3 rounded-xl font-semibold border border-[#CAD0EC] text-[#1D2875] bg-white hover:bg-[#eff3ff] transition">
+                    {{ __('messages.back') }}
                 </button>
-                <button onclick="saveItinerary()" class="px-10 py-3 rounded-lg font-semibold bg-[#2C3E65] text-white hover:bg-[#3d5078] transition">
-                    Lanjutkan
+                <button type="button" id="saveFooterButton" onclick="saveItinerary()" class="px-10 py-3 rounded-xl font-semibold bg-[#1D2875] text-white hover:bg-[#131a5a] transition btn-disabled">
+                    {{ __('messages.continue') }}
                 </button>
             </div>
         </div>
@@ -221,14 +301,14 @@
             </button>
             
             <!-- Modal Title -->
-            <h2 class="text-2xl font-bold text-[#2C3E65] text-center mb-2">Ingin Menambahkan<br>ke Perjalanan ?</h2>
-            <p class="text-center text-gray-500 mb-6" id="modalDate">14 Februari, 2025</p>
+            <h2 class="text-2xl font-bold text-[#2C3E65] text-center mb-2">{!! nl2br(e(__('messages.plan_modal_question'))) !!}</h2>
+            <p class="text-center text-gray-500 mb-6" id="modalDate">{{ \Carbon\Carbon::parse($itinerary->tanggal_mulai)->translatedFormat('d F, Y') }}</p>
             
             <!-- Time Inputs -->
             <div class="mb-8">
                 <!-- Mulai Time -->
                 <div class="mb-6">
-                    <label class="block text-[#3F51B5] font-semibold mb-3 text-center">Mulai</label>
+                    <label class="block text-[#3F51B5] font-semibold mb-3 text-center">{{ __('messages.start') }}</label>
                     <div class="time-input-group justify-center">
                         <div class="time-box">
                             <input type="number" min="0" max="23" value="09" class="time-input" id="startHour" maxlength="2">
@@ -243,19 +323,28 @@
                 </div>
                 
                 <!-- Selesai Label -->
-                <p class="text-center text-[#3F51B5] font-semibold">Selesai</p>
+                <p class="text-center text-[#3F51B5] font-semibold">{{ __('messages.finish') }}</p>
             </div>
             
             <!-- Submit Button -->
             <button onclick="confirmAddDestination()" class="w-full bg-[#2C3E65] text-white py-4 rounded-xl font-semibold text-lg hover:bg-[#3d5078] transition">
-                Tambahkan
+                {{ __('messages.add') }}
             </button>
         </div>
     </div>
 
     <script>
-        let selectedDestinationData = null;
-        let addedDestinations = [];
+    let selectedDestinationData = null;
+    let addedDestinations = [];
+
+    const planPlaceholder = @json(__('messages.plan_placeholder'));
+    const planVisitTimeLabel = @json(__('messages.plan_visit_time'));
+    const planMinWarning = @json(__('messages.plan_minimum_warning'));
+    const planSaveSuccess = @json(__('messages.plan_save_success'));
+    const planSaveFailedPrefix = @json(__('messages.plan_save_failed_prefix'));
+    const planSaveError = @json(__('messages.plan_save_error'));
+    const planRemoveDestinationLabel = @json(__('messages.plan_remove_destination'));
+    const planUnknownError = @json(__('messages.unknown_error'));
 
         // Load existing destinations from itinerary
         @if($itinerary->destinasiList->count() > 0)
@@ -279,17 +368,17 @@
             });
         @endif
 
-        function filterCategory(category) {
+        function filterCategory(category, target) {
             const cards = document.querySelectorAll('.destinasi-card');
             const buttons = document.querySelectorAll('.category-btn');
             
             // Update button states
             buttons.forEach(btn => {
-                btn.classList.remove('active', 'bg-[#3F51B5]', 'text-white');
-                btn.classList.add('border-2', 'border-gray-300', 'text-gray-700', 'bg-white');
+                btn.classList.remove('active', 'bg-[#1D2875]', 'text-white');
+                btn.classList.add('border', 'border-[#CAD0EC]', 'text-[#203B8A]', 'bg-white');
             });
-            event.target.classList.add('active', 'bg-[#3F51B5]', 'text-white');
-            event.target.classList.remove('border-2', 'border-gray-300', 'text-gray-700', 'bg-white');
+            target.classList.add('active', 'bg-[#1D2875]', 'text-white');
+            target.classList.remove('border', 'border-[#CAD0EC]', 'text-[#203B8A]', 'bg-white');
             
             // Filter cards
             cards.forEach(card => {
@@ -308,7 +397,7 @@
                 location: element.dataset.location,
                 hours: element.dataset.hours,
                 phone: element.dataset.phone,
-                image: element.querySelector('img').src
+                image: element.querySelector('img')?.src || '{{ asset("images/placeholder.jpg") }}'
             };
             
             showTimeModal();
@@ -344,6 +433,8 @@
                 ...selectedDestinationData,
                 timeRange: timeRange
             });
+
+            markSelectedCards();
             
             // Update UI
             renderSelectedDestinations();
@@ -356,44 +447,76 @@
             const container = document.getElementById('selected-destinations');
             container.innerHTML = '';
             
+            if (addedDestinations.length === 0) {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'selection-row placeholder';
+                placeholder.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    <div class="selected-destination-card placeholder">
+                        ${planPlaceholder}
+                    </div>
+                `;
+                container.appendChild(placeholder);
+                toggleSaveButtons(false);
+                return;
+            }
+
             addedDestinations.forEach((dest, index) => {
                 const wrapper = document.createElement('div');
-                wrapper.className = 'flex items-start gap-4 mb-4';
+                wrapper.className = 'selection-row';
                 wrapper.innerHTML = `
-                    <div class="number-bullet mt-2">
-                        ${index + 1}
-                    </div>
+                    <div class="timeline-dot"></div>
                     <div class="selected-destination-card flex-1">
                         <img src="${dest.image}" alt="${dest.name}">
                         <div class="flex-1">
-                            <h3 class="font-bold text-[#3F51B5] mb-1">${dest.name}</h3>
-                            <p class="text-sm text-gray-600 mb-1">Datang di jam <strong>${dest.timeRange}</strong></p>
-                            <p class="text-sm text-gray-600 flex items-center gap-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            <h3 class="text-lg font-semibold text-[#163072] mb-1">${dest.name}</h3>
+                            <p class="meta mb-1">${planVisitTimeLabel} <strong>${dest.timeRange}</strong></p>
+                            <p class="meta flex items-center gap-2">
+                                <svg class="w-5 h-5 text-[#1D2875]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
                                 ${dest.phone}
                             </p>
                         </div>
-                        <button onclick="removeDestination(${index})" class="text-[#3F51B5] hover:text-[#2c3a7f] p-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        <button onclick="removeDestination(${index})" class="text-[#EA5455] hover:text-[#c33838] p-2" aria-label="${planRemoveDestinationLabel}">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-7 4h8a2 2 0 002-2v-7a2 2 0 00-2-2h-1.5l-.723-1.447A1 1 0 0014.862 4h-5.724a1 1 0 00-.915.553L7.5 6H6a2 2 0 00-2 2v7a2 2 0 002 2z" />
                             </svg>
                         </button>
                     </div>
                 `;
                 container.appendChild(wrapper);
             });
+
+            toggleSaveButtons(true);
+        }
+
+        function toggleSaveButtons(enabled) {
+            const headerBtn = document.getElementById('saveHeaderButton');
+            const footerBtn = document.getElementById('saveFooterButton');
+            [headerBtn, footerBtn].forEach(btn => {
+                if (!btn) return;
+                btn.classList.toggle('btn-disabled', !enabled);
+            });
         }
 
         function removeDestination(index) {
             addedDestinations.splice(index, 1);
+            markSelectedCards();
             renderSelectedDestinations();
+        }
+
+        function markSelectedCards() {
+            const cards = document.querySelectorAll('.destinasi-card');
+            cards.forEach(card => {
+                const isSelected = addedDestinations.some(dest => dest.id === card.dataset.id);
+                card.classList.toggle('selected', isSelected);
+            });
         }
 
         function saveItinerary() {
             if (addedDestinations.length === 0) {
-                alert('Silakan tambahkan minimal 1 destinasi');
+                alert(planMinWarning);
                 return;
             }
             
@@ -417,15 +540,15 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Perjalanan berhasil disimpan!');
+                    alert(planSaveSuccess);
                     window.location.href = '{{ route("plan.list") }}';
                 } else {
-                    alert('Gagal menyimpan: ' + (data.message || 'Unknown error'));
+                    alert(planSaveFailedPrefix + ' ' + (data.message || planUnknownError));
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Terjadi kesalahan saat menyimpan');
+                alert(planSaveError);
             });
         }
 
@@ -444,5 +567,15 @@
                 closeModal();
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderSelectedDestinations();
+            markSelectedCards();
+        });
+
+        function scrollToDestinations() {
+            const section = document.getElementById('destinationCatalog');
+            section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     </script>
 @endsection

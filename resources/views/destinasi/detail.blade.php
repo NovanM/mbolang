@@ -22,15 +22,15 @@
             <!-- Success Message -->
             @if(session('success'))
             <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg relative" role="alert">
-                <strong class="font-bold">Berhasil!</strong>
+                <strong class="font-bold">{{ __('messages.success') }}!</strong>
                 <span class="block sm:inline">{{ session('success') }}</span>
                 <button onclick="this.parentElement.style.display='none'" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>{{ __('messages.close') }}</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
                 </button>
             </div>
             @endif
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 <!-- Left Column - Image -->
                 <div>
                     <div class="relative h-[500px] rounded-2xl overflow-hidden shadow-lg">
@@ -45,10 +45,10 @@
                 </div>
 
                 <!-- Right Column - Details -->
-                <div class="space-y-6">
+                <div class="space-y-7">
                 <!-- Title & Wishlist -->
-                <div class="flex justify-between items-start">
-                    <h1 class="text-3xl font-bold text-gray-900">{{ $destinasi->nama_destinasi }}</h1>
+                <div class="flex justify-between items-start gap-6">
+                    <h1 class="text-3xl font-extrabold text-[#2b4aa3] leading-tight">{{ $destinasi->nama_destinasi }}</h1>
                     
                     @auth
                     <form action="{{ route('favorit.toggle', $destinasi->id_destinasi) }}" method="POST" class="inline">
@@ -75,72 +75,88 @@
                 </div>
 
                 <!-- Address -->
-                <p class="text-gray-600">{{ $destinasi->lokasi }}</p>
+                <p class="text-gray-600 leading-relaxed">{{ $destinasi->lokasi }}</p>
 
                 <!-- Tags -->
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-[#E3F2FD] text-[#1976D2] text-sm font-medium rounded-full border border-[#1976D2]">Edukasi</span>
-                    <span class="px-3 py-1 bg-[#E3F2FD] text-[#1976D2] text-sm font-medium rounded-full border border-[#1976D2]">{{ $destinasi->kategori }}</span>
-                    <span class="px-3 py-1 bg-[#E3F2FD] text-[#1976D2] text-sm font-medium rounded-full border border-[#1976D2]">Tempat santai</span>
-                    <span class="px-3 py-1 bg-[#E3F2FD] text-[#1976D2] text-sm font-medium rounded-full border border-[#1976D2]">Outdoor</span>
-                    <span class="px-3 py-1 bg-[#E3F2FD] text-[#1976D2] text-sm font-medium rounded-full border border-[#1976D2]">Seru dan Mengagumkan</span>
+                        <div class="flex flex-wrap gap-3">
+                    <span class="px-4 py-1.5 bg-white text-[#2b4aa3] text-sm font-semibold rounded-full border border-[#dcecff] shadow-sm">Edukasi</span>
+                    <span class="px-4 py-1.5 bg-white text-[#2b4aa3] text-sm font-semibold rounded-full border border-[#dcecff] shadow-sm">{{ $destinasi->kategori }}</span>
+                    <span class="px-4 py-1.5 bg-white text-[#2b4aa3] text-sm font-semibold rounded-full border border-[#dcecff] shadow-sm">Tempat santai</span>
+                    <span class="px-4 py-1.5 bg-white text-[#2b4aa3] text-sm font-semibold rounded-full border border-[#dcecff] shadow-sm">Outdoor</span>
+                    <span class="px-4 py-1.5 bg-white text-[#2b4aa3] text-sm font-semibold rounded-full border border-[#dcecff] shadow-sm">Seru dan Mengagumkan</span>
                 </div>
 
                 <!-- Rating & Reviews -->
-                <div class="flex items-center gap-4">
-                    <div class="flex items-center gap-1">
-                        @for($i = 0; $i < 5; $i++)
-                            @if($i < floor($destinasi->average_rating))
-                            <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                            </svg>
-                            @else
-                            <svg class="w-5 h-5 text-gray-300 fill-current" viewBox="0 0 20 20">
-                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                            </svg>
-                            @endif
-                        @endfor
-                        <span class="text-lg font-semibold text-gray-700 ml-1">{{ number_format($destinasi->average_rating, 1) }}/5</span>
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex items-center gap-1">
+                            @for($i = 0; $i < 5; $i++)
+                                @if($i < floor($destinasi->average_rating))
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                </svg>
+                                @else
+                                <svg class="w-5 h-5 text-gray-300 fill-current" viewBox="0 0 20 20">
+                                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                </svg>
+                                @endif
+                            @endfor
+                        </div>
+                        <span class="text-xl font-bold text-[#4a64d8]">{{ number_format($destinasi->average_rating, 1) }}/5</span>
+                        <span class="text-sm font-medium text-gray-500">{{ $destinasi->ulasan->count() }} {{ __('messages.penilaian') }}</span>
                     </div>
-                    <span class="text-gray-600">{{ $destinasi->ulasan->count() }} Penilaian</span>
+
+                    @php
+                        // lighter blue for pill action to match reference
+                        $addToTripClasses = 'inline-flex items-center gap-2 px-4 py-2 border-2 border-[#2b4aa3] text-[#2b4aa3] rounded-full font-semibold transition hover:bg-[#2b4aa3] hover:text-white';
+                    @endphp
+
                     @auth
-                    <button onclick="showAddToPlanModal()" class="text-[#3F51B5] font-medium flex items-center gap-1 hover:underline">
-                        Tambah ke perjalanan
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"/>
-                        </svg>
+                    <button onclick="showAddToPlanModal()" class="{{ $addToTripClasses }}">
+                        <span>{{ __('messages.add_to_trip') }}</span>
+                        <span class="flex items-center justify-center w-6 h-6 rounded-full border border-current">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m7-7H5" />
+                            </svg>
+                        </span>
                     </button>
                     @else
-                    <a href="{{ route('login') }}" class="text-[#3F51B5] font-medium flex items-center gap-1 hover:underline">
-                        Tambah ke perjalanan
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"/>
-                        </svg>
+                    <a href="{{ route('login') }}" class="{{ $addToTripClasses }}">
+                        <span>{{ __('messages.add_to_trip') }}</span>
+                        <span class="flex items-center justify-center w-6 h-6 rounded-full border border-current">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m7-7H5" />
+                            </svg>
+                        </span>
                     </a>
                     @endauth
                 </div>
 
                 <!-- Description -->
                 <div>
-                    <h3 class="font-bold text-lg text-gray-900 mb-2">Tentang</h3>
+                    <h3 class="font-bold text-xl text-[#2b4aa3] mb-3">{{ __('messages.about') }}</h3>
                     <p class="text-gray-600 leading-relaxed">{{ $destinasi->deskripsi }}</p>
                 </div>
 
                 <!-- Operating Hours -->
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="flex items-center gap-2 mb-4">
-                        <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <h3 class="font-bold text-gray-900">Jam Operasional</h3>
+                <div class="rounded-2xl border border-[#dce9ff] bg-[#eef5ff] p-6 shadow-sm">
+                    <div class="flex items-center gap-3 mb-5">
+                        <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white text-[#102347] shadow">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </span>
+                        <h3 class="font-bold text-lg text-[#2b4aa3]">{{ __('messages.operating_hours') }}</h3>
                     </div>
-                    <div class="space-y-2 text-sm">
+                    <div class="space-y-2 text-sm text-[#102347]">
                         @php
-                            $days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                            $days = app()->getLocale() === 'id' 
+                                ? ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
+                                : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
                             $today = now()->dayOfWeek;
                         @endphp
                         @foreach($days as $index => $day)
-                        <div class="flex justify-between items-center {{ $index === $today ? 'font-semibold text-gray-900' : 'text-gray-600' }}">
+                        <div class="flex justify-between items-center rounded-xl px-4 py-2 {{ $index === $today ? 'bg-white shadow-sm font-semibold' : '' }}">
                             <span>{{ $day }}</span>
                             <span>{{ $destinasi->jam_buka }}</span>
                         </div>
@@ -149,33 +165,36 @@
                 </div>
 
                 <!-- Book Button -->
-                <a href="{{ route('destinasi.pesan-tiket', $destinasi->id_destinasi) }}" class="w-full bg-[#1E3A8A] text-white py-4 rounded-lg font-semibold text-lg hover:bg-[#2c5aa0] transition shadow-lg block text-center">
-                    Pesan tiket
+                <a href="{{ route('destinasi.pesan-tiket', $destinasi->id_destinasi) }}" class="w-full py-4 rounded-2xl border-2 border-[#102347] text-[#102347] font-semibold text-lg flex items-center justify-center gap-3 hover:bg-[#102347] hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-2.21 0-4 1.79-4 4 0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2 0-2.21-1.79-4-4-4zm0 8c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z" />
+                    </svg>
+                    {{ __('messages.book_ticket') }}
                 </a>
 
                 <!-- Reviews Section -->
-                <div id="ulasan" class="border-t pt-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-xl text-gray-900">Ulasan</h3>
-                        <a href="{{ route('destinasi.ulasan', $destinasi->id_destinasi) }}" class="text-[#3F51B5] text-sm font-medium hover:underline">Lihat Semua</a>
+                <div id="ulasan" class="border-t border-[#e5e7ff] pt-6">
+                    <div class="flex justify-between items-center mb-5">
+                        <h3 class="font-bold text-2xl text-[#102347]">{{ __('messages.ulasan') }}</h3>
+                        <a href="{{ route('destinasi.ulasan', $destinasi->id_destinasi) }}" class="text-[#2b4aa3] text-sm font-semibold hover:underline">{{ __('messages.view_all') }}</a>
                     </div>
 
                     <!-- Reviews List -->
-                    <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide" style="scroll-behavior: smooth;">
+                    <div class="flex gap-5 overflow-x-auto pb-4 scrollbar-hide" style="scroll-behavior: smooth;">
                         @forelse($destinasi->ulasan as $ulasan)
-                        <div class="bg-white border border-gray-200 rounded-lg p-4 min-w-[320px] flex-shrink-0">
-                            <div class="flex items-start justify-between mb-2">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-10 h-10 bg-gradient-to-br from-[#00BCD4] to-[#0097A7] rounded-full flex items-center justify-center text-white font-bold">
+                        <div class="bg-white border border-[#dce4ff] rounded-2xl p-5 min-w-[320px] flex-shrink-0 shadow-sm">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-11 h-11 bg-gradient-to-br from-[#00BCD4] to-[#0097A7] rounded-full flex items-center justify-center text-white font-bold">
                                         {{ substr($ulasan->pengguna->nama, 0, 1) }}
                                     </div>
                                     <div>
-                                        <p class="font-semibold text-gray-900">{{ $ulasan->pengguna->nama }}</p>
+                                        <p class="font-semibold text-[#102347]">{{ $ulasan->pengguna->nama }}</p>
                                         <p class="text-xs text-gray-500">by {{ strtolower(substr($ulasan->pengguna->nama, 0, strpos($ulasan->pengguna->nama, ' ') ?: strlen($ulasan->pengguna->nama))) }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <span class="text-sm font-bold text-gray-900">{{ $ulasan->rating }}</span>
+                                    <span class="text-sm font-bold text-[#102347]">{{ $ulasan->rating }}</span>
                                     <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
                                         <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                     </svg>
@@ -184,13 +203,13 @@
                             <p class="text-sm text-gray-600 leading-relaxed">{{ $ulasan->komentar }}</p>
                         </div>
                         @empty
-                        <p class="text-gray-500 text-center py-8 w-full">Belum ada ulasan</p>
+                        <p class="text-gray-500 text-center py-8 w-full">{{ __('messages.no_reviews_yet') }}</p>
                         @endforelse
                     </div>
 
                     <!-- Add Review Button -->
-                    <a href="{{ route('destinasi.tambah-ulasan', $destinasi->id_destinasi) }}" class="w-full mt-4 bg-[#1E3A8A] text-white py-3 rounded-lg font-semibold hover:bg-[#2c5aa0] transition block text-center">
-                        Tambahkan Ulasan
+                    <a href="{{ route('destinasi.tambah-ulasan', $destinasi->id_destinasi) }}" class="w-full mt-6 bg-[#102347] text-white py-4 rounded-2xl font-semibold text-lg hover:bg-[#0c1b36] transition block text-center shadow-md">
+                        {{ __('messages.add_review') }}
                     </a>
                 </div>
             </div>
@@ -202,7 +221,7 @@
             <div id="addToPlanBackdrop" class="absolute inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0" onclick="closeAddToPlanModal()"></div>
             <div id="addToPlanContent" class="relative bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl transform transition-all duration-300 ease-in-out scale-95 opacity-0">
                 <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                    <h2 class="text-2xl font-bold text-[#3F51B5]">Pilih Plan yang Sudah Kamu Buat!</h2>
+                    <h2 class="text-2xl font-bold text-[#3F51B5]">{{ __('messages.plan_modal_title') }}</h2>
                     <button onclick="closeAddToPlanModal()" class="text-gray-400 hover:text-gray-600 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -214,22 +233,46 @@
                     @forelse($userItineraries as $itinerary)
                     <div class="bg-white border-2 border-gray-200 rounded-xl p-6 mb-4 hover:border-[#3F51B5] transition cursor-pointer" onclick="selectPlan({{ $itinerary->id_itinerary }}, '{{ $itinerary->nama_itinerary }}', '{{ $itinerary->tanggal_mulai }}')">
                         <div class="flex items-start gap-4">
-                            <div class="flex gap-2">
-                                <div class="w-20 h-16 bg-gray-200 rounded-lg"></div>
-                                <div class="w-20 h-16 bg-gray-200 rounded-lg"></div>
-                            </div>
+                            @php
+                                $firstDestination = $itinerary->destinasiList->first();
+                                $planImage = $firstDestination && $firstDestination->destinasi && $firstDestination->destinasi->foto
+                                    ? asset($firstDestination->destinasi->foto)
+                                    : null;
+                            @endphp
+
+                            @if($planImage)
+                                <img src="{{ $planImage }}" alt="{{ $itinerary->nama_itinerary }}" class="w-20 h-16 object-cover rounded-lg">
+                            @else
+                                <div class="w-20 h-16 rounded-lg flex items-center justify-center bg-gradient-to-br from-[#3F51B5] to-[#1E3A8A] text-white text-xl font-semibold">
+                                    {{ strtoupper(substr($itinerary->nama_itinerary, 0, 1)) }}
+                                </div>
+                            @endif
+
                             <div class="flex-1">
                                 <h3 class="text-lg font-bold text-[#3F51B5] mb-2">{{ $itinerary->nama_itinerary }}</h3>
                                 <div class="flex flex-wrap gap-2 mb-2">
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Destinasi 1</span>
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Destinasi 2</span>
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">dan lainnya</span>
+                                    @forelse($itinerary->destinasiList->take(3) as $destItem)
+                                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                            {{ $destItem->destinasi->nama_destinasi }}
+                                        </span>
+                                    @empty
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm">{{ __('messages.plan_list_no_destinations') }}</span>
+                                    @endforelse
+
+                                    @if($itinerary->destinasiList->count() > 3)
+                                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                            {{ __('messages.plan_modal_more_destinations', ['count' => $itinerary->destinasiList->count() - 3]) }}
+                                        </span>
+                                    @endif
                                 </div>
                                 <p class="text-gray-600 text-sm">
                                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                     </svg>
-                                    {{ \Carbon\Carbon::parse($itinerary->tanggal_mulai)->format('d F Y') }}
+                                    {{ \Carbon\Carbon::parse($itinerary->tanggal_mulai)->translatedFormat('d F Y') }}
+                                    @if($itinerary->tanggal_mulai !== $itinerary->tanggal_selesai)
+                                        - {{ \Carbon\Carbon::parse($itinerary->tanggal_selesai)->translatedFormat('d F Y') }}
+                                    @endif
                                 </p>
                             </div>
                         </div>
@@ -239,9 +282,10 @@
                         <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
-                        <p class="text-gray-600 mb-4">Belum ada plan. Buat plan terlebih dahulu!</p>
+                        <p class="text-lg font-semibold text-gray-700 mb-2">{{ __('messages.plan_list_empty_title') }}</p>
+                        <p class="text-gray-600 mb-4">{{ __('messages.plan_list_empty_description') }}</p>
                         <a href="{{ route('itinerary.create') }}" class="inline-block px-6 py-2 bg-[#3F51B5] text-white rounded-lg font-semibold hover:bg-[#2c3a7f] transition">
-                            Buat Plan Baru
+                            {{ __('messages.plan_list_create_button') }}
                         </a>
                     </div>
                     @endforelse

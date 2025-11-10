@@ -20,10 +20,10 @@
         <div id="filterBackdrop" class="absolute inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-0" onclick="toggleFilter()"></div>
         
         <!-- Modal Content -->
-        <div id="filterContent" class="relative bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto transform transition-all duration-300 ease-in-out scale-95 opacity-0">
+    <div id="filterContent" class="relative bg-white rounded-2xl shadow-xl w-full max-w-[92vw] sm:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-4 max-h-[85vh] overflow-y-auto transform transition-all duration-300 ease-in-out scale-95 opacity-0">
             <!-- Header -->
             <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center rounded-t-lg">
-                <h2 class="text-xl font-bold text-[#1E3A8A]">Pilih kategori yang anda inginkan</h2>
+                <h2 class="text-2xl font-bold text-[#2b4aa3] tracking-tight leading-tight">{{ __('messages.choose_category') }}</h2>
                 <button onclick="toggleFilter()" class="text-gray-500 hover:text-gray-700 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -32,130 +32,126 @@
             </div>
 
             <!-- Filter Content -->
-            <div class="p-6">
-                <form id="filterForm" class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="px-10 py-8">
+                <form id="filterForm" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 xl:gap-10 min-w-0">
                     <!-- Destinasi Wisata -->
-                    <div>
-                        <h3 class="font-bold text-[#3F51B5] mb-4">Destinasi Wisata</h3>
+                    <div class="min-w-0">
+                        <h3 class="font-semibold text-[#2b4aa3] text-lg mb-4">{{ __('messages.tourist_destination') }}</h3>
                         <div class="space-y-3">
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="kategori[]" value="Wisata alam" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Wisata alam</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.wisata_alam') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="kategori[]" value="Kuliner" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Kuliner</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.kuliner') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="kategori[]" value="Wahana bermain" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Wahana bermain</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.wahana_bermain') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="kategori[]" value="Museum" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Museum</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.museum') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="kategori[]" value="Perpustakaan" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Perpustakaan</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.perpustakaan') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="kategori[]" value="Lainnya" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Lainnya</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.lainnya') }}</span>
                             </label>
                         </div>
                     </div>
 
                     <!-- Fasilitas -->
-                    <div>
-                        <h3 class="font-bold text-[#3F51B5] mb-4">Fasilitas</h3>
+                    <div class="min-w-0">
+                        <h3 class="font-semibold text-[#2b4aa3] text-lg mb-4">{{ __('messages.fasilitas') }}</h3>
                         <div class="space-y-3">
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="fasilitas[]" value="Indoor" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Indoor</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.indoor') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="fasilitas[]" value="Outdoor" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Outdoor</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.outdoor') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="fasilitas[]" value="Smooking area" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Smooking area</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.smoking_area') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="fasilitas[]" value="AC" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">AC</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.ac') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="fasilitas[]" value="Toilet" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Toilet</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.toilet') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="fasilitas[]" value="Mushola" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Mushola</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.mushola') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="fasilitas[]" value="Lainnya" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Lainnya</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.lainnya') }}</span>
                             </label>
                         </div>
                     </div>
 
                     <!-- Keperluan -->
-                    <div>
-                        <h3 class="font-bold text-[#3F51B5] mb-4">Keperluan</h3>
+                    <div class="min-w-0">
+                        <h3 class="font-semibold text-[#2b4aa3] text-lg mb-4">{{ __('messages.keperluan') }}</h3>
                         <div class="space-y-3">
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="keperluan[]" value="Tempat santai" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Tempat santai</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.tempat_santai') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="keperluan[]" value="Meeting" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Meeting</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.meeting') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="keperluan[]" value="Keluarga" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Keluarga</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.keluarga') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="keperluan[]" value="Teman" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Teman</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.teman') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="keperluan[]" value="Date" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Date</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.date') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="keperluan[]" value="Nugas" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Nugas</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.nugas') }}</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" name="keperluan[]" value="Lainnya" class="w-4 h-4 text-[#3F51B5] border-gray-300 rounded focus:ring-[#3F51B5]">
-                                <span class="text-sm text-gray-700">Lainnya</span>
+                                <span class="text-sm text-gray-700">{{ __('messages.lainnya') }}</span>
                             </label>
                         </div>
                     </div>
 
                     <!-- Harga -->
-                    <div>
-                        <h3 class="font-bold text-[#3F51B5] mb-4">Harga</h3>
-                        <div class="space-y-4">
-                            <div>
+                    <div class="min-w-0">
+                        <h3 class="font-semibold text-[#2b4aa3] text-lg mb-4">{{ __('messages.harga') }}</h3>
+                        <div class="flex flex-col justify-center gap-3">
+                            <div class="flex flex-wrap items-center gap-4">
                                 <input 
                                     type="number" 
                                     name="harga_min" 
-                                    placeholder="Minimal" 
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3F51B5] focus:border-transparent"
+                                    placeholder="{{ __('messages.minimal') }}" 
+                                    class="flex-1 min-w-[180px] max-w-xs px-5 py-3 border-2 border-[#4a64d8] rounded-full text-[#2b4aa3] placeholder-[#9aaae8] focus:ring-2 focus:ring-[#657af0] focus:border-transparent"
                                 >
-                            </div>
-                            <div class="flex items-center justify-center">
-                                <div class="w-full h-px bg-gray-300"></div>
-                            </div>
-                            <div>
+                                <span class="text-[#4a64d8] font-semibold text-lg flex-shrink-0">—</span>
                                 <input 
                                     type="number" 
                                     name="harga_max" 
-                                    placeholder="Maksimal" 
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3F51B5] focus:border-transparent"
+                                    placeholder="{{ __('messages.maksimal') }}" 
+                                    class="flex-1 min-w-[180px] max-w-xs px-5 py-3 border-2 border-[#4a64d8] rounded-full text-[#2b4aa3] placeholder-[#9aaae8] focus:ring-2 focus:ring-[#657af0] focus:border-transparent"
                                 >
                             </div>
                         </div>
@@ -165,13 +161,15 @@
 
             <!-- Footer -->
             <div class="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 rounded-b-lg">
-                <button 
-                    type="button" 
-                    onclick="applyFilter()" 
-                    class="w-full bg-[#1E3A8A] text-white py-3 rounded-lg font-semibold hover:bg-[#2c5aa0] transition-colors"
-                >
-                    Simpan
-                </button>
+                <div class="flex justify-end">
+                    <button 
+                        type="button" 
+                        onclick="applyFilter()" 
+                        class="w-60 py-3 bg-[#102347] text-white rounded-full font-semibold shadow-md hover:bg-[#0c1b36] transition-colors"
+                    >
+                        {{ __('messages.simpan') }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -180,8 +178,8 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Greeting -->
         <div class="mb-6">
-            <h1 class="text-2xl font-bold text-[#1E3A8A] mb-2">
-                Mau pergi ke mana, <span class="text-[#3F51B5]">{{ Auth::check() ? Auth::user()->nama : 'Hessi' }}</span>?
+            <h1 class="text-2xl font-bold text-[#2b4aa3] mb-2">
+                {!! __('messages.greeting', ['name' => '<span class="text-[#4a64d8]">' . (Auth::check() ? Auth::user()->nama : '') . '</span>']) !!}
             </h1>
         </div>
 
@@ -212,8 +210,8 @@
                         id="searchInput"
                         name="search"
                         value="{{ request('search') }}"
-                        placeholder="Cari destinasi wisata impianmu di sini!" 
-                        class="w-full pl-14 pr-6 py-4 border border-gray-300 rounded-full shadow-md text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-[#3F51B5] focus:border-gray-300 outline-none transition"
+                        placeholder="{{ __('messages.search_placeholder') }}" 
+                        class="w-full pl-14 pr-6 py-4 border border-[#9aaae8] rounded-full shadow-md text-[#2b4aa3] placeholder-[#a6b5f2] focus:ring-2 focus:ring-[#4a64d8] focus:border-[#657af0] outline-none transition"
                     >
                 </div>
             </form>
@@ -222,7 +220,7 @@
         <!-- Destinasi Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($destinasi as $item)
-            <a href="{{ route('destinasi.detail', $item->id_destinasi) }}" class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#3F51B5] block">
+            <a href="{{ route('destinasi.detail', $item->id_destinasi) }}" class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#657af0] block">
                 <!-- Image -->
                 <div class="relative h-56 bg-gray-200">
                     @if($item->foto)
@@ -238,7 +236,7 @@
                 <div class="p-5">
                     <!-- Title & Rating -->
                     <div class="mb-3">
-                        <h3 class="text-xl font-bold text-[#3F51B5] mb-2">{{ $item->nama_destinasi }}</h3>
+                        <h3 class="text-xl font-bold text-[#2b4aa3] mb-2">{{ $item->nama_destinasi }}</h3>
                         <div class="flex items-center gap-1">
                             @for($i = 0; $i < 5; $i++)
                                 @if($i < floor($item->average_rating))
@@ -251,12 +249,12 @@
                                 </svg>
                                 @endif
                             @endfor
-                            <span class="text-base font-bold text-gray-700 ml-1">{{ number_format($item->average_rating, 1) }}/5</span>
+                            <span class="text-base font-bold text-[#4a64d8] ml-1">{{ number_format($item->average_rating, 1) }}/5</span>
                         </div>
                     </div>
 
                     <!-- Location -->
-                    <p class="text-base text-[#3F51B5] mb-2 font-medium">{{ $item->lokasi }}</p>
+                    <p class="text-base text-[#4a64d8] mb-2 font-medium">{{ $item->lokasi }}</p>
 
                     <!-- Category -->
                     <div class="flex items-center gap-2">

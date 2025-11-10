@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Checkout - ' . $destinasi->nama_destinasi)
+@section('title', __('messages.checkout') . ' - ' . $destinasi->nama_destinasi)
 
 @section('body-class', 'bg-gray-50')
 
@@ -9,27 +9,27 @@
 @endpush
 
 @section('content')
-    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <!-- Order Summary Card -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
-            <h1 class="text-2xl font-bold text-[#3F51B5] mb-4">{{ $destinasi->nama_destinasi }}</h1>
+        <div class="bg-[#F8FAFF] rounded-[26px] shadow-[0_20px_40px_rgba(16,35,71,0.12)] border border-[#E4E9FF] p-8 mb-8">
+            <h1 class="text-[28px] font-extrabold text-[#1F3C88] mb-3">{{ $destinasi->nama_destinasi }}</h1>
             
-            <div class="space-y-2 mb-4">
-                <p class="text-gray-700">Tiket Masuk {{ $destinasi->nama_destinasi }} + Eco Green Park</p>
-                <p class="font-semibold text-gray-900">{{ $quantity }} Tiket</p>
+            <div class="space-y-1.5 mb-6 text-[#3C4A7A]">
+                <p class="text-base font-medium">{{ __('messages.entrance_ticket') }} {{ $destinasi->nama_destinasi }} + Eco Green Park</p>
+                <p class="text-sm font-semibold uppercase tracking-wide text-[#1F3C88]">{{ trans_choice('messages.ticket_count', $quantity, ['count' => $quantity]) }}</p>
             </div>
 
-            <div class="border-t border-gray-200 pt-4">
-                <p class="text-sm text-gray-500 mb-2">Tanggal dipilih</p>
-                <p class="font-semibold text-gray-900">{{ \Carbon\Carbon::parse($date)->locale('id')->isoFormat('D MMMM YYYY') }}</p>
+            <div class="pt-5 border-t border-[#E0E6FF]">
+                <p class="text-sm font-semibold text-[#9AA6C5] mb-2">{{ __('messages.selected_date') }}</p>
+                <p class="text-base font-semibold text-[#1D2756]">{{ \Carbon\Carbon::parse($date)->locale(app()->getLocale())->isoFormat('D MMMM YYYY') }}</p>
             </div>
         </div>
 
-        <!-- Detail Pemesanan Section -->
-        <div class="mb-6">
-            <h2 class="text-xl font-bold text-[#3F51B5] mb-4">Detail Pemesanan</h2>
+        <!-- Booking Details Section -->
+        <div class="mb-10">
+            <h2 class="text-lg font-bold text-[#1F3C88] mb-5 uppercase tracking-wide">{{ __('messages.booking_details') }}</h2>
             
-            <form id="checkout-form" class="space-y-4">
+            <form id="checkout-form" class="space-y-5 bg-white border border-[#E4E9FF] rounded-[22px] shadow-[0_16px_32px_rgba(16,35,71,0.1)] px-6 sm:px-8 py-8">
                 @csrf
                 
                 <input type="hidden" name="quantity" value="{{ $quantity }}">
@@ -37,45 +37,45 @@
                 
                 <!-- Nama Lengkap -->
                 <div>
-                    <label for="nama" class="block text-sm font-bold text-[#3F51B5] mb-2">Nama Lengkap</label>
+                    <label for="nama" class="block text-sm font-semibold text-[#1F3C88] mb-2">{{ __('messages.full_name') }}</label>
                     <input 
                         type="text" 
                         id="nama" 
                         name="nama" 
-                        class="w-full px-4 py-3 border-2 border-[#3F51B5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3F51B5] focus:border-transparent"
+                        class="w-full px-4 py-3 border border-[#6383FF] rounded-[14px] focus:outline-none focus:ring-4 focus:ring-[#E1E8FF] focus:border-[#304DFF] shadow-[0_10px_18px_rgba(33,56,117,0.08)]"
                         required
                     >
                 </div>
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block text-sm font-bold text-[#3F51B5] mb-2">Email</label>
+                    <label for="email" class="block text-sm font-semibold text-[#1F3C88] mb-2">{{ __('messages.email') }}</label>
                     <input 
                         type="email" 
                         id="email" 
                         name="email" 
-                        class="w-full px-4 py-3 border-2 border-[#3F51B5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3F51B5] focus:border-transparent"
+                        class="w-full px-4 py-3 border border-[#6383FF] rounded-[14px] focus:outline-none focus:ring-4 focus:ring-[#E1E8FF] focus:border-[#304DFF] shadow-[0_10px_18px_rgba(33,56,117,0.08)]"
                         required
                     >
                 </div>
 
                 <!-- Negara -->
                 <div>
-                    <label for="negara" class="block text-sm font-bold text-[#3F51B5] mb-2">Negara</label>
+                    <label for="negara" class="block text-sm font-semibold text-[#1F3C88] mb-2">{{ __('messages.country') }}</label>
                     <input 
                         type="text" 
                         id="negara" 
                         name="negara" 
-                        class="w-full px-4 py-3 border-2 border-[#3F51B5] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3F51B5] focus:border-transparent"
+                        class="w-full px-4 py-3 border border-[#6383FF] rounded-[14px] focus:outline-none focus:ring-4 focus:ring-[#E1E8FF] focus:border-[#304DFF] shadow-[0_10px_18px_rgba(33,56,117,0.08)]"
                         required
                     >
                 </div>
 
                 <!-- Total Price -->
-                <div class="bg-gray-50 rounded-lg p-4 mt-6">
+                <div class="bg-[#F6F8FF] rounded-[18px] px-6 py-5 mt-6">
                     <div class="flex items-center justify-between">
-                        <span class="text-gray-700 font-medium">Total:</span>
-                        <span class="text-2xl font-bold text-gray-900">IDR {{ number_format($total, 0, ',', '.') }}</span>
+                        <span class="text-sm font-semibold text-[#7A87A6]">{{ __('messages.total') }}:</span>
+                        <span class="text-2xl font-extrabold text-[#1F3C88]">IDR {{ number_format($total, 0, ',', '.') }}</span>
                     </div>
                 </div>
 
@@ -83,21 +83,30 @@
                 <button 
                     type="submit" 
                     id="pay-button"
-                    class="w-full bg-[#1E3A8A] text-white py-4 rounded-lg font-semibold text-lg hover:bg-[#2c5aa0] transition shadow-lg mt-4"
+                    class="w-full bg-[#122A6A] text-white py-4 rounded-full font-semibold text-lg hover:bg-[#0D1F4F] transition shadow-[0_14px_28px_rgba(15,32,84,0.28)] mt-6"
                 >
-                    Kirim
+                    {{ __('messages.submit') }}
                 </button>
             </form>
         </div>
     </main>
 
     <script>
+        const checkoutMessages = {
+            processing: @json(__('messages.processing')),
+            submit: @json(__('messages.submit')),
+            pending: @json(__('messages.payment_pending')),
+            failed: @json(__('messages.payment_failed')),
+            error: @json(__('messages.payment_error')),
+            unknown: @json(__('messages.unknown_error'))
+        };
+
         document.getElementById('checkout-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const payButton = document.getElementById('pay-button');
             payButton.disabled = true;
-            payButton.textContent = 'Processing...';
+            payButton.textContent = checkoutMessages.processing;
             
             const formData = new FormData(this);
             
@@ -131,28 +140,28 @@
                             window.location.href = successUrl;
                         },
                         onPending: function(result) {
-                            alert('Menunggu pembayaran! Silakan selesaikan pembayaran Anda.');
+                            alert(checkoutMessages.pending);
                             window.location.href = '{{ route("akun.tiket") }}';
                         },
                         onError: function(result) {
-                            alert('Pembayaran gagal! Silakan coba lagi.');
+                            alert(checkoutMessages.failed);
                             payButton.disabled = false;
-                            payButton.textContent = 'Kirim';
+                            payButton.textContent = checkoutMessages.submit;
                         },
                         onClose: function() {
                             payButton.disabled = false;
-                            payButton.textContent = 'Kirim';
+                            payButton.textContent = checkoutMessages.submit;
                         }
                     });
                 } else {
-                    alert('Error: ' + (data.error || 'Terjadi kesalahan'));
+                    alert(checkoutMessages.error + ': ' + (data.error || checkoutMessages.unknown));
                     payButton.disabled = false;
-                    payButton.textContent = 'Kirim';
+                    payButton.textContent = checkoutMessages.submit;
                 }
             } catch (error) {
-                alert('Error: ' + error.message);
+                alert(checkoutMessages.error + ': ' + error.message);
                 payButton.disabled = false;
-                payButton.textContent = 'Kirim';
+                payButton.textContent = checkoutMessages.submit;
             }
         });
     </script>
