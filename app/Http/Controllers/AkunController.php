@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Favorit;
 use App\Models\Ulasan;
-use App\Models\Booking;
 
 class AkunController extends Controller
 {
@@ -40,11 +39,8 @@ class AkunController extends Controller
 
     public function tiket()
     {
-        $user = Auth::user();
-        $bookings = Booking::where('pengguna_id_pengguna', $user->id_pengguna)
-            ->with('destinasi')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // Booking data is currently unavailable because the related table is not implemented yet.
+        $bookings = collect();
 
         return view('akun.tiket', compact('bookings'));
     }
