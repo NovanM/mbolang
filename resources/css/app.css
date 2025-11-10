@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Background Pattern for Mbolang Login/Register Page - Travel Icons */
+@layer utilities {
+    .pattern-bg {
+        background-image: url('/images/bg-auth.png');
+        background-repeat: repeat;
+        background-size: 100px 100px;
+    }
+}
+
