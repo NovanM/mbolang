@@ -177,6 +177,7 @@ return [
 
     // Payment
     'payment_success' => 'Pembayaran Telah Berhasil!',
+    'payment_success_subtitle' => 'Tiket kamu siap digunakan, selamat menikmati perjalanan!',
     'view_my_tickets' => 'Lihat Tiket Saya',
     'back_to_home' => 'Kembali ke Beranda',
 

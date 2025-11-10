@@ -177,6 +177,7 @@ return [
 
     // Payment
     'payment_success' => 'Payment Successful!',
+    'payment_success_subtitle' => 'Your tickets are ready—have an amazing trip!',
     'view_my_tickets' => 'View My Tickets',
     'back_to_home' => 'Back to Home',
 
